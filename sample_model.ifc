@@ -16,6 +16,14 @@ DATA;
 #10= IFCCOLUMN('2Z7_aB9$X8v_uE$1M7wQ4z',#3,'Column-01-Concrete',$,$,$,$,$,$);
 #20= IFCCOLUMN('1Y5_bC8$W7u_tD$0L6vP3y',#3,'Column-02-Concrete',$,$,$,$,$,$);
 #30= IFCCOLUMN('3A8_cD0$Y9w_vF$2N8xR5z',#3,'Column-03-Steel',$,$,$,$,$,$);
+#40= IFCCOLUMN('4B9_eE2$Z0x_wG$3O9yS6z',#3,'Mismatched-Column-04',$,$,$,$,$,$);
+#50= IFCCOLUMN('5C0_fF3$A1y_xH$4P0zT7z',#3,'',$,$,$,$,$,$);
+#100= IFCSPACE('111_aA1$X0x_uE$1M9yS1z',#3,'Office-101','Main Administration Room',$,$,$,$,$,$,$);
+#101= IFCSPACE('222_bB2$Y1y_vF$2N9yS2z',#3,'Conference-102','Meeting Hall',$,$,$,$,$,$,$);
+#200= IFCDOOR('333_cC3$Z2z_wG$3O9yS3z',#3,'Door-Admin-01',$,$,$,$,$,$,$,$);
+#201= IFCDOOR('444_dD4$A3a_xH$4P9yS4z',#3,'Door-Conf-02',$,$,$,$,$,$,$,$);
+#300= IFCRELSPACESBOUNDARY('555_eE5$B4b_yI$5Q9yS5z',#3,$,$,#100,#200,$,$,$);
+#301= IFCRELSPACESBOUNDARY('666_fF6$C5c_zJ$6R9yS6z',#3,$,$,#101,#201,$,$,$);
 
 ENDSEC;
 END-ISO-10303-21;
