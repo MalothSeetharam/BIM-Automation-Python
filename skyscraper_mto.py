@@ -1,44 +1,41 @@
 import ifcopenshell
-import ifcopenshell.api
 import pandas as pd
 
 def generate_material_takeoff(excel_path):
     print("🏗️ Initializing Skyscraper Material Takeoff (MTO) Engine...")
     
-    # Initialize a compliant structural model database
+    # Initialize an empty IFC file with a stable standard schema
     model = ifcopenshell.file(schema="IFC2X3")
     
-    # Establish project metadata frameworks
-    project = ifcopenshell.api.run("root.create_entity", model, ifc_class="IfcProject", name="Dubai Tech Tower")
-    building = ifcopenshell.api.run("root.create_entity", model, ifc_class="IfcBuilding", name="Tower A")
+    # Create baseline project infrastructure directly to avoid user profile errors
+    project = model.create_entity("IfcProject", GlobalId="123_Proj_MTO", Name="Dubai Tech Tower")
+    building = model.create_entity("IfcBuilding", GlobalId="456_Bldg_MTO", Name="Tower A")
     
     mto_records = []
     
-    print("📐 Calculating concrete volume and material allocation metrics...")
+    print("📐 Calculating concrete volumes and material density distributions...")
     
-    # Loop through all 10 floors to run material math
+    # Process load variations for all 10 stories
     for level in range(1, 11):
         floor_name = f"Level {level:02d}"
         elevation = float((level - 1) * 4.0)
         
-        # Define slab structural dimensional specifications
-        # Let's say lower floors have thicker slabs (0.3m / 300mm) for heavy loads, 
-        # and upper floors use standard slabs (0.2m / 200mm) to reduce dead weight.
+        # Design Logic: Thicker slabs at foundation levels to support cumulative load
         slab_thickness = 0.30 if level <= 3 else 0.20
-        floor_area = 1200.0 # 1,200 square meters per floor plate
+        floor_area = 1200.0  # 1200 sq meters floor plate
         
-        # Material Takeoff Calculations
+        # Quantitative Calculations
         concrete_volume_per_slab = floor_area * slab_thickness
-        total_slabs_on_floor = 2 if level < 10 else 1 # Roof has a single slab cap
+        total_slabs_on_floor = 2 if level < 10 else 1  # Roof has a single cap slab
         total_floor_concrete_volume = concrete_volume_per_slab * total_slabs_on_floor
         
-        # Standard concrete weight density is roughly 2.4 Tons per cubic meter
+        # Reinforced concrete density constant (~2.4 Tons per cubic meter)
         concrete_weight_tons = total_floor_concrete_volume * 2.4
         
-        # Create the slab entity in our 3D database model
-        ifcopenshell.api.run("root.create_entity", model, ifc_class="IfcSlab", name=f"Slab-L{level}")
+        # Write the component data straight into our local IFC database schema
+        model.create_entity("IfcSlab", GlobalId=f"SLB_MTO_L{level}", Name=f"ConcreteSlab-Floor-{level}")
         
-        # Append calculated engineering metrics to our schedule log array
+        # Append calculated row to our spreadsheet data matrix
         mto_records.append({
             "Floor_Level": floor_name,
             "Elevation": f"{elevation:.1f}m",
@@ -49,10 +46,10 @@ def generate_material_takeoff(excel_path):
             "Est_Concrete_Weight_(Tons)": concrete_weight_tons
         })
         
-    # Compile everything into a structured master schedule dataframe
+    # Compile base data metrics
     df = pd.DataFrame(mto_records)
     
-    # Add a Summary Row at the bottom for total project procurement order
+    # Calculate global project totals for the summary row
     total_row = pd.DataFrame([{
         "Floor_Level": "TOTAL REQUIREMENT",
         "Elevation": "-",
@@ -63,16 +60,17 @@ def generate_material_takeoff(excel_path):
         "Est_Concrete_Weight_(Tons)": df["Est_Concrete_Weight_(Tons)"].sum()
     }])
     
+    # Merge summary row seamlessly to the bottom
     final_df = pd.concat([df, total_row], ignore_index=True)
     
-    # Export cleanly to an Excel material schedule
+    # Generate the professional Excel schedule
     final_df.to_excel(excel_path, index=False)
     
     print("\n🚀 MATERIAL TAKEOFF SCHEDULE GENERATED SUCCESSFULLY!")
     print("=" * 95)
     print(final_df.to_string(index=False))
     print("=" * 95)
-    print(f"📂 Master procurement sheet compiled and written to: {excel_path}")
+    print(f"📂 Procurement spreadsheet compiled live at: {excel_path}")
 
 if __name__ == "__main__":
     generate_material_takeoff("Skyscraper_Material_Takeoff_Schedule.xlsx")
