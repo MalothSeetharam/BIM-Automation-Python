@@ -22,8 +22,8 @@ DATA;
 #101= IFCSPACE('222_bB2$Y1y_vF$2N9yS2z',#3,'Conference-102','Meeting Hall',$,$,$,$,$,$,$);
 #200= IFCDOOR('333_cC3$Z2z_wG$3O9yS3z',#3,'Door-Admin-01',$,$,$,$,$,$,$,$);
 #201= IFCDOOR('444_dD4$A3a_xH$4P9yS4z',#3,'Door-Conf-02',$,$,$,$,$,$,$,$);
-#300= IFCRELSPACESBOUNDARY('555_eE5$B4b_yI$5Q9yS5z',#3,$,$,#100,#200,$,$,$);
-#301= IFCRELSPACESBOUNDARY('666_fF6$C5c_zJ$6R9yS6z',#3,$,$,#101,#201,$,$,$);
+#300= IFCRELSPACEBOUNDARY('555_eE5$B4b_yI$5Q9yS5z',#3,$,$,#100,#200,$,$,$);
+#301= IFCRELSPACEBOUNDARY('666_fF6$C5c_zJ$6R9yS6z',#3,$,$,#101,#201,$,$,$);
 
 ENDSEC;
 END-ISO-10303-21;

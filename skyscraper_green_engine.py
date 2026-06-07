@@ -10,7 +10,7 @@ def run_green_compliance_engine(excel_path):
     
     # Corporate Regulatory Standard: Maximum allowable Embodied Carbon per square meter
     # Based on modern international sustainable building thresholds (Al Sa'fat / LEED benchmarks)
-    MAX_CARBON_ALLOWABLE_PER_M2 = 250.0  # kg CO2e / m2
+    MAX_CARBON_ALLOWABLE_PER_M2 = 200.0  # kg CO2e / m2
     FLOOR_AREA = 1500.0  # 1,500 sq meters floor plate
     
     # Material Environmental Coefficients (Global Averages for Production Materials)
@@ -25,7 +25,7 @@ def run_green_compliance_engine(excel_path):
     print("📊 Evaluating material volumes against global green building regulations...")
     
     # 2. Process load, material layout, and compliance variations for a 10-story tower
-    for level in range(1, 11):
+    for level in range(1, 12):
         floor_name = f"Level {level:02d}"
         
         # Design Logic: Material quantities vary by height to minimize upper structural dead load
@@ -38,9 +38,9 @@ def run_green_compliance_engine(excel_path):
             steel_vol = 25.0
             glass_vol = 25.0       # Higher percentage of glass facade
         else:
-            concrete_vol = 150.0   # Roof structure / Penthouse levels
-            steel_vol = 15.0
-            glass_vol = 40.0       # High glass observation zones
+            concrete_vol = 100.0   # Reduced concrete to save weight
+            steel_vol = 45.0       # High steel reinforcement for the structural crown
+            glass_vol = 50.0       # Premium floor-to-ceiling glass paneling      # High glass observation zones
             
         # Write structural component database references locally into the IFC schema
         model.create_entity("IfcBuildingStorey", GlobalId=f"STOREY_L{level}", Name=floor_name)
